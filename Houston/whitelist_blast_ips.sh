@@ -1,13 +1,10 @@
 #!/bin/bash
+# This script should whitelist all current blastapi ip addresses
 
-# This script automatically configures a whitelist for all know blastapi ip addresses. 
-# All changes made will persist across reboots. 
+apt update && apt upgrade -y
+apt install ipset nftables iptables -y
 
-# Ensure required packages are installed
-apt update && apt upgrade -yqq
-apt install ipset -yqq
-
-# Create the whitelist
+# Create the list
 ipset create whitelist hash:ip hashsize 4096
 ipset add whitelist 35.82.18.19
 ipset add whitelist 44.235.115.250
@@ -17,13 +14,14 @@ ipset add whitelist 54.170.182.176
 ipset add whitelist 54.78.50.234
 ipset add whitelist 18.139.188.145
 
-# Backup the whitelist 
+# Save the list 
 ipset save whitelist -f ipset-whitelist.backup
 
-# Allow whitelist access
+# Permit the list 
 iptables -A INPUT -m set --match-set whitelist src -j ACCEPT
 
-apt install ipset-persistent iptables-persistent -yqq
-# Persist the whitelist and new firewall rules after reboot
+# Save everything
+apt install ipset-persistent iptables-persistent -y
 ipset-save > /etc/iptables/ipsets
 iptables-save > /etc/iptables/rules.v4
+
