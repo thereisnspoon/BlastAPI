@@ -70,4 +70,4 @@ sudo systemctl start shiden.service
 sleep 10
 systemctl status shiden
 
-echo "The shiden node is syncing"
+echo FINISHED!!! > ~/setup/finished.txt
