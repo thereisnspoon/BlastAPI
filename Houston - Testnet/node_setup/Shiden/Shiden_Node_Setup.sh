@@ -1,5 +1,5 @@
 #!/bin/bash
-# Shiden Pruned Node Setup
+# Shiden Node Setup
 
 # Settings
 RELEASE_VERSION=v4.33.0
