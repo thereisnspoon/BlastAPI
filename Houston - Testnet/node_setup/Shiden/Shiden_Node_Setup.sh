@@ -46,6 +46,7 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl enable shiden.service
 sudo systemctl start shiden.service
+sleep 5
 sudo systemctl stop shiden.service
 
 # Polkadot Data Snapshot
@@ -64,10 +65,11 @@ $para_data &
 # Chown After Moving All data
 sudo chown -R shiden_service "$DATA_DIR"
 
-# Start the service
+# the service
 sudo systemctl start shiden.service
 
 sleep 10
-systemctl status shiden
+STATUS=$(systemctl status shiden)
 
 echo FINISHED!!! > ~/setup/done.txt
+echo $STATUS >> ~/setup/done.txt
