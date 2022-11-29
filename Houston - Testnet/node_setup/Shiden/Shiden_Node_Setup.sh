@@ -34,7 +34,7 @@ User=shiden_service
 SyslogIdentifier=astar
 SyslogFacility=local7
 KillSignal=SIGHUP
-ExecStart=/var/lib/shiden-data/astar-collator --state-pruning archive --port=33333 --rpc-port=9933 --ws-port=9944 --sync fast --execution=Wasm --wasm-execution=compiled --trie-cache-size 80530636 --unsafe-rpc-external --unsafe-ws-external --rpc-cors all --name ImStaked --chain shiden --base-path /var/lib/shiden-data --ws-external --prometheus-external --prometheus-port 9615 -- --port=33334 --prometheus-external --prometheus-port 9626 --name="ImStaked-embedded-relay" --ws-max-connections 1000 --runtime-cache-size 3 --no-telemetry --no-mdns
+ExecStart=/var/lib/shiden-data/astar-collator --state-pruning archive --port=33333 --rpc-port=9933 --ws-port=9944 --execution=Wasm --wasm-execution=compiled --trie-cache-size 80530636 --unsafe-rpc-external --unsafe-ws-external --rpc-cors all --name ImStaked --chain shiden --base-path /var/lib/shiden-data --ws-external --prometheus-external --prometheus-port 9615 -- --port=33334 --prometheus-external --prometheus-port 9626 --name="ImStaked-embedded-relay" --ws-max-connections 1000 --runtime-cache-size 3 --no-telemetry --no-mdns
 Restart=always
 RestartSec=10
 
