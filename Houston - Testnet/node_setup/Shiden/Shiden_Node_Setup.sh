@@ -70,4 +70,4 @@ sudo systemctl start shiden.service
 sleep 10
 systemctl status shiden
 
-echo FINISHED!!! > ~/setup/finished.txt
+echo FINISHED!!! > ~/setup/done.txt
