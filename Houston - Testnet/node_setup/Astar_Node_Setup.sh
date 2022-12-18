@@ -1,15 +1,15 @@
 #!/bin/bash
-# Astar Pruned Node Setup
+# Astar BlastAPI Node Setup
 
 # Settings
-RELEASE_VERSION=v4.33.0 
+RELEASE_VERSION=v4.39.1
 BINARY_URL="https://github.com/AstarNetwork/Astar/releases/download/${RELEASE_VERSION}/astar-collator-${RELEASE_VERSION}-ubuntu-x86_64.tar.gz"
 DATA_DIR="/var/lib/astar-data"
 
 # Update System
 sudo apt-get update && sudo apt-get upgrade -y 
 sudo apt-get autoremove -y && sudo apt-get autoclean -y
-sudo apt-get install git curl wget jq net-tools lz4 zip unzip mlocate net-tools whois apt-transport-https ca-certificates libssl-dev bash-completion needrestart -y
+sudo apt-get install git curl wget jq net-tools lz4 zip unzip mlocate unattended-upgrades net-tools whois apt-transport-https ca-certificates libssl-dev gnupg bash-completion needrestart node-ws -y
 
 # Add User 
 adduser astar_service --system --no-create-home
@@ -17,14 +17,15 @@ mkdir -p $DATA_DIR && cd $DATA_DIR
 
 # Download and Install binary
 wget $BINARY_URL
-tar -xvf astar-collator-${RELEASE_VERSION}-ubuntu-x86_64.tar.gz 
+tar -xf astar-collator-${RELEASE_VERSION}-ubuntu-x86_64.tar.gz 
 sudo chown -R astar_service $DATA_DIR
 sudo chmod ugo+x "$DATA_DIR"/astar-collator 
 
 # Create new systemd service 
 cat <<EOF >/etc/systemd/system/astar.service 
 [Unit]
-Description=Astar Pruned Node
+Description=Astar Node
+
 [Service]
 Type=simple
 Restart=on-failure
@@ -33,9 +34,31 @@ User=astar_service
 SyslogIdentifier=astar
 SyslogFacility=local7
 KillSignal=SIGHUP  
-ExecStart=/var/lib/astar-data/astar-collator --port=33333 --rpc-port=9933 --ws-port=9944 --execution=Wasm --wasm-execution=compiled --wasmtime-instantiation-strategy pooling-copy-on-write --trie-cache-size 0 --unsafe-rpc-external --unsafe-ws-external --rpc-cors all --name ImStaked --chain astar --unsafe-pruning --pruning=1000 --base-path /var/lib/astar-data --ws-external --prometheus-external --prometheus-port 9615 -- --port=33334 --prometheus-external --prometheus-port 9626 --unsafe-pruning --pruning=1000 --name="ImStaked-embedded-relay"
+ExecStart=/var/lib/astar-data/astar-collator \
+     --sync=full \
+     --blocks-pruning archive \
+     --port=30333 \
+     --rpc-port=9933 \
+     --ws-port=9944 \
+     --execution=Wasm \
+     --wasm-execution=compiled \
+     --unsafe-rpc-external \ 
+     --unsafe-ws-external \ 
+     --rpc-cors all \
+     --prometheus-external \
+     --prometheus-port 9617 \
+     --name "<NODE_NAME>" \
+     --chain astar \
+     --base-path /var/lib/astar-data \
+     -- \
+     --port 30334 \
+     --prometheus-external \
+     --prometheus-port 9616 \
+     --name="ImStaked-embedded-relay"
+
 Restart=always
 RestartSec=10
+
 [Install]
 WantedBy=multi-user.target
 EOF
