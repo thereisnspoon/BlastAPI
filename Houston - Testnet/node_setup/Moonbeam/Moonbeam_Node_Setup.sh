@@ -1,13 +1,11 @@
 #!/bin/bash
-
 # Moonbeam Node Setup
 # by ImStaked
 
 # Settings
 RELEASE_VERSION=v0.28.1
 BINARY_URL="https://github.com/PureStake/moonbeam/releases/download/${RELEASE_VERSION}/moonbeam"
-DATA_DIR="/var/lib/astar-data"
-
+DATA_DIR="/var/lib/moonbeam-data"
 
 function setup_system {
      # Update System
