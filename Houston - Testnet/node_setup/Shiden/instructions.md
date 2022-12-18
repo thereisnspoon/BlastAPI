@@ -9,14 +9,6 @@ chmod +x Shiden_Node_Setup.sh
 screen -d
 ```
 
-#### Estimated Wait Time = 2 Hours
-- The script will create a file upon completion but only when it has finished. 
-
-- To check if the script is done use this command. It will return FINISHED!!! when complete
-```
-cat ~/setup/done.txt
-```
-
 - It is now safe to remove the setup files 
 ```
 rm -rf ~/setup
