@@ -10,6 +10,7 @@ screen -d
 ```
 
 - After the node is setup remove the setup files
+
 ``` rm -rf ~/setup ```
 
 - Useful commands.
