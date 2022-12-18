@@ -9,7 +9,7 @@ chmod +x Shiden_Node_Setup.sh
 screen -d
 ```
 
-- It is now safe to remove the setup files 
+- After the node is setup remove the setup files
 ```
 rm -rf ~/setup
 ```
