@@ -24,7 +24,7 @@ sudo chmod ugo+x "$DATA_DIR"/astar-collator
 # Create new systemd service
 cat <<EOF >/etc/systemd/system/shiden.service
 [Unit]
-Description=Shiden Pruned Node
+Description=Shiden Node
 
 [Service]
 Type=simple
