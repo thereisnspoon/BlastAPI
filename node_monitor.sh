@@ -52,3 +52,14 @@ echo $astar_catchup_status
 else
 echo "Astar Is Healthy"
 fi
+
+# Shiden Health Check
+SHIDEN_NODE_URL='http://10.204.53.149:9933/health'
+shiden_catchup_status=$(curl -s $SHIDEN_NODE_URL | jq .isSyncing )
+if [ "$shiden_catchup_status" != false ]
+then
+echo "$shiden_catchup_status"
+else
+echo "Shiden Is Healthy"
+fi
+
