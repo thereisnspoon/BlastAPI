@@ -16,15 +16,13 @@ ipset add whitelist 54.170.182.176
 ipset add whitelist 54.78.50.234
 ipset add whitelist 18.139.188.145
 
-apt install ipset-persistent iptables-persistent -y
-
-# Save the list 
-ipset save whitelist -f ipset-whitelist.backup
-
 # Add the whitelist to the firewall
 iptables -A INPUT -m set --match-set whitelist src -j ACCEPT
 
-# Save everything
+# Save lists and make persistant
 apt install ipset-persistent iptables-persistent -y
-ipset-save > /etc/iptables/ipsets
+ipset save whitelist -f ipset-whitelist.backup
 iptables-save > /etc/iptables/rules.v4
+
+
+echo "The whitelist and associated firewall rule have been configured and should persist after reboot"
