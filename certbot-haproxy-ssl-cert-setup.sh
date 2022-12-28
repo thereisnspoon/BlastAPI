@@ -15,16 +15,14 @@ certbot certonly -d $DOMAIN --non-interactive --agree-tos --email $EMAIL --nginx
 
 sudo mkdir -p /etc/ssl/"$DOMAIN"
 
-sudo cat /etc/letsencrypt/live/"$DOMAIN"/fullchain.pem \
-    /etc/letsencrypt/live/"$DOMAIN"m/privkey.pem \
-    | sudo tee /etc/ssl/"$DOMAIN"/"$DOMAIN".pem
-   
-   
+bash -c "cat /etc/letsencrypt/live/"$DOMAIN"/fullchain.pem /etc/letsencrypt/live/"$DOMAIN"/privkey.pem > /etc/ssl/"$DOMAIN"/"$DOMAIN".pem"
+
+
 # Snap should renew the cert automatically
 # Create Script that runs daily
 touch /opt/update-certs.sh
 cat > /opt/update-certs.sh <<EOF
-bash -c "cat /etc/letsencrypt/live/"$DOMAIN"/fullchain.pem /etc/letsencrypt/live/$DOMAIN/privkey.pem > /etc/ssl/$DOMAIN/$DOMAIN"
+bash -c "cat /etc/letsencrypt/live/"$DOMAIN"/fullchain.pem /etc/letsencrypt/live/"$DOMAIN"/privkey.pem > /etc/ssl/"$DOMAIN"/"$DOMAIN".pem"
 service haproxy reload
 EOF
 chmod +x /opt/update-certs.sh
