@@ -15,6 +15,10 @@ ipset add whitelist 3.248.148.80
 ipset add whitelist 54.170.182.176
 ipset add whitelist 54.78.50.234
 ipset add whitelist 18.139.188.145
+ipset add whitelist 52.71.120.21
+ipset add whitelist 52.20.248.136
+ipset add whitelist 52.0.232.1
+ipset add whitelist 34.194.155.195
 
 # Add the whitelist to the firewall
 iptables -A INPUT -m set --match-set whitelist src -j ACCEPT
